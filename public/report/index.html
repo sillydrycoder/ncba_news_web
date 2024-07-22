@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report Issue</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+  </head>
+
+  <body>
+    <header style="text-align: center">
+      <img src="../assets/images/ncba_logo.png" alt="NCBA&E Logo" width="100" />
+      <h1>NCBA&E News</h1>
+    </header>
+    <main>
+      <section>
+        <h2>Report an Issue</h2>
+      </section>
+      <section>
+        <form id="reportForm">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="issue">Issue/Feedback:</label>
+          <textarea id="issue" name="issue" rows="5" required></textarea>
+
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+    </main>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        addDoc,
+      } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDaKIssfZidqmYRXPkJJXPzFomge_z2WeI",
+        authDomain: "ncba-clone.firebaseapp.com",
+        projectId: "ncba-clone",
+        storageBucket: "ncba-clone.appspot.com",
+        messagingSenderId: "221631606516",
+        appId: "1:221631606516:web:fa82fda60ccca5d594b8a1",
+        measurementId: "G-NB04W21L4P",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // Get a reference to the reports collection
+      const reportsCollection = collection(db, "reports");
+
+      document
+        .getElementById("reportForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          // Get form values
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const issue = document.getElementById("issue").value;
+
+          try {
+            // Add a new document with a generated id.
+            await addDoc(reportsCollection, {
+              name: name,
+              email: email,
+              issue: issue,
+              timestamp: new Date(),
+            });
+            alert("Report submitted successfully!");
+            // Clear the form
+            document.getElementById("reportForm").reset();
+          } catch (error) {
+            console.error("Error adding document: ", error);
+            alert("Error submitting report. Please try again.");
+          }
+        });
+    </script>
+  </body>
+</html>

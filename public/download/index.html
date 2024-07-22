@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Download App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body>
+    <header style="text-align: center">
+      <img src="../assets/images/ncba_logo.png" alt="NCBA&E Logo" width="100" />
+      <h1>NCBA&E News</h1>
+    </header>
+    <main>
+      <section>
+        <h2>How to Install</h2>
+        <ul>
+          <li>Download the APK file from the list below.</li>
+          <li>Open the downloaded file on your Android device.</li>
+          <li>Follow the on-screen instructions to install the app.</li>
+        </ul>
+        <blockquote>If you get any unsafe warning or install restrictions. Just click <strong>Install anyway</strong> because any app which is not installed from <strong>Play Store</strong> is considered as threat by android.</blockquote>
+        <section style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <img src="../assets/images/install_warning_1.png" alt="NCBA&E Logo" width="200" />
+            <img src="../assets/images/install_warning_2.png" alt="NCBA&E Logo" width="200" />
+        </section>
+      </section>
+      <section>
+        <h2>Version Archive</h2>
+        <details>
+          <summary style="font-size: large; font-weight: bolder">
+            V1.0.0 (Stable) - 21 July 2024
+          </summary>
+          <h3>Whats New!</h3>
+          <section>
+            <h2>Features</h2>
+            <ul>
+              <li>Categorial filtering.</li>
+              <li>No Connnection Warning</li>
+              <li>Forgot Password Implemented</li>
+              <li>Email Verification Enforced</li>
+              <li>Save as favorite.</li>
+              <li>Improved three-step easy news editor.</li>
+              <li>Full controls for admins.</li>
+              <li>Easy news management for publishers.</li>
+              <li>Discussion/Comments for each article.</li>
+              <li>Profile management and data control.</li>
+            </ul>
+            <button
+              style="display: flex; gap: 10px"
+              onclick="downloadApk('NCBA&E News V1.0.0')"
+            >
+              <span class="material-symbols-outlined">apk_install</span>
+              Download for Android
+            </button>
+          </section>
+        </details>
+      </section>
+    </main>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+      import {
+        getStorage,
+        ref,
+        getDownloadURL,
+      } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDaKIssfZidqmYRXPkJJXPzFomge_z2WeI",
+        authDomain: "ncba-clone.firebaseapp.com",
+        projectId: "ncba-clone",
+        storageBucket: "ncba-clone.appspot.com",
+        messagingSenderId: "221631606516",
+        appId: "1:221631606516:web:fa82fda60ccca5d594b8a1",
+        measurementId: "G-NB04W21L4P",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const storage = getStorage(app);
+
+      window.downloadApk = function (release_name) {
+        const storageRef = ref(storage, `releases/${release_name}.zip`);
+        getDownloadURL(storageRef)
+          .then((url) => {
+            window.open(url, "_blank");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+    </script>
+  </body>
+</html>
